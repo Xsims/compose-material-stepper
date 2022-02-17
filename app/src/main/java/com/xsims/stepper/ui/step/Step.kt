@@ -1,16 +1,11 @@
 package com.xsims.stepper.ui.step
 
 import android.graphics.drawable.Icon
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.IntrinsicSize.Max
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -40,6 +35,7 @@ class Step constructor(
 fun StepUi(
   stepNumber: Int,
   title: String,
+  subtitle: String? = null,
   expanded: Boolean,
   isLastStep: Boolean,
   enablePositiveButton: Boolean,
@@ -63,7 +59,8 @@ fun StepUi(
         bottom.linkTo(stepIndicatorId.bottom)
         start.linkTo(stepIndicatorId.end, margin = 16.dp)
       },
-      text = title,
+      title = title,
+      subtitle = subtitle,
       active = expanded
     )
 

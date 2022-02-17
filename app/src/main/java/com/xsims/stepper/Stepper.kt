@@ -59,6 +59,7 @@ fun Stepper(
       StepUi(
         stepNumber = index + 1,
         title = step.title,
+        subtitle = step.subtitle,
         expanded = index == currentStep.value,
         isLastStep = index == (steps.size - 1),
         enablePositiveButton = enablePositiveButton,

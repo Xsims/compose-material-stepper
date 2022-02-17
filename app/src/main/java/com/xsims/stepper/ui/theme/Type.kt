@@ -21,6 +21,11 @@ val inactiveStepTitleStyle = TextStyle(
   fontSize = 14.sp,
   letterSpacing = 0.1.sp
 )
+val stepSubtitleStyle = TextStyle(
+  fontWeight = FontWeight.Normal,
+  fontSize = 12.sp,
+  letterSpacing = 0.1.sp
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(

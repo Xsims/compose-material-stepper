@@ -44,7 +44,8 @@ class MainActivity : ComponentActivity() {
   }
 
   private val steps = listOf(
-    Step(title = "Name of step 1") {
+    Step(title = "Name of step 1",
+    subtitle = "Subtitle of step 1") {
       Box(modifier = Modifier
         .height(250.dp)
         .fillMaxWidth()

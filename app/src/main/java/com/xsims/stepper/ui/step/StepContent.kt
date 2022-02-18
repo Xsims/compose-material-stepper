@@ -39,9 +39,10 @@ fun StepContent(
   visible: Boolean = true,
   enablePositiveButton: Boolean,
   enableNegativeButton: Boolean,
-  onClickPositiveButton: () -> Unit = { },
-  onClickNegativeButton: () -> Unit = { },
+  onClickPositiveButton: (Step) -> Unit = { },
+  onClickNegativeButton: (Step) -> Unit = { },
   content: @Composable () -> Unit,
+  step: Step,
 ) {
   val enterFadeIn = remember {
     fadeIn(
@@ -80,12 +81,12 @@ fun StepContent(
         if (enablePositiveButton)
           Button(
             modifier = Modifier.padding(end = 16.dp),
-            onClick = { onClickPositiveButton() }) {
+            onClick = { onClickPositiveButton(step) }) {
             Text("Continue".uppercase())
           }
         if (enableNegativeButton)
           TextButton(
-            onClick = { onClickNegativeButton() }) {
+            onClick = { onClickNegativeButton(step) }) {
             Text(
               "Cancel".uppercase(),
               color = Color.Gray,

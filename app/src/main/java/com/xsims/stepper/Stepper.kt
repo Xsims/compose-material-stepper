@@ -1,23 +1,16 @@
 package com.xsims.stepper
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.IntrinsicSize.Max
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion
 import androidx.compose.ui.unit.dp
 import com.xsims.stepper.StepperType.vertical
 import com.xsims.stepper.ui.step.Step
+import com.xsims.stepper.ui.step.StepState.ERROR
 import com.xsims.stepper.ui.step.StepUi
 
 /**
@@ -44,13 +37,15 @@ fun Stepper(
   currentStep: MutableState<Int> = remember { mutableStateOf(0) },
   enablePositiveButton: Boolean = true,
   enableNegativeButton: Boolean = true,
-  onClickPositiveButton: () -> Unit = {
-    if(currentStep.value < steps.size)
+  onClickPositiveButton: (Step) -> Unit = {
+    if(currentStep.value < steps.size) {
       currentStep.value = currentStep.value + 1
+    }
   },
-  onClickNegativeButton: () -> Unit = {
-    if(currentStep.value > 0)
+  onClickNegativeButton: (Step) -> Unit = {
+    if(currentStep.value > 0) {
       currentStep.value = currentStep.value - 1
+    }
   },
   steps: List<Step>,
 ) {
@@ -66,7 +61,9 @@ fun Stepper(
         enableNegativeButton = enableNegativeButton,
         onClickPositiveButton = onClickPositiveButton,
         onClickNegativeButton = onClickNegativeButton,
+        onStepComplete = step.onStepComplete,
         content = step.content,
+        step = step,
       )
     }
   }

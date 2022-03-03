@@ -95,7 +95,7 @@ fun StepUi(
       COMPLETE -> {
         StepIconIndicator(
           modifier = stepIndicatorConstraints,
-          isActive = expanded,
+          isActive = true,
           icon = Rounded.Check
         )
       }

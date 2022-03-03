@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
@@ -30,9 +30,14 @@ import androidx.compose.ui.unit.dp
 import com.xsims.stepper.ui.step.Step
 import com.xsims.stepper.ui.step.StepState.COMPLETE
 import com.xsims.stepper.ui.step.StepState.ERROR
+import com.xsims.stepper.ui.step.StepState.LOADING
 import com.xsims.stepper.ui.step.StepState.TODO
 import com.xsims.stepper.ui.theme.Black38
 import com.xsims.stepper.ui.theme.StepperTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -51,18 +56,24 @@ class MainActivity : ComponentActivity() {
     state = statePrintAppStep,
   ) {
     when (statePrintAppStep.value) {
+      TODO -> Button(onClick = {
+        statePrintAppStep.value = LOADING
+        CoroutineScope(Dispatchers.IO).launch {
+          delay(2000)
+        }.invokeOnCompletion {
+          statePrintAppStep.value = ERROR
+        }
+      }) {
+        Text("click")
+      }
+      LOADING -> CircularProgressIndicator()
       ERROR -> Button(onClick = {
         statePrintAppStep.value = COMPLETE
         nextStep()
       }) {
         Text("RETRY")
       }
-      TODO -> Button(onClick = { statePrintAppStep.value = ERROR }) {
-        Text("click")
-      }
-      COMPLETE -> {
-        Text("Complete")
-      }
+      COMPLETE -> Text("Complete")
     }
   }
 
@@ -103,11 +114,6 @@ class MainActivity : ComponentActivity() {
       title = "Bluetooth connection",
       subtitle = "Check if Bluetooth is present and enabled"
     ) {
-      OutlinedTextField(
-        value = "",
-        onValueChange = { },
-        label = { Text("Name") }
-      )
       Box(
         modifier = Modifier
           .height(250.dp)

@@ -75,7 +75,14 @@ fun StepUi(
         modifier = stepIndicatorConstraints,
         isActive = expanded
       )
-      TODO ->
+      COMPLETE -> {
+        StepIconIndicator(
+          modifier = stepIndicatorConstraints,
+          isActive = true,
+          icon = Rounded.Check
+        )
+      }
+      else ->
         if (step.activeIcon != null)
           StepIconIndicator(
             modifier = stepIndicatorConstraints,
@@ -88,16 +95,6 @@ fun StepUi(
             index,
             isActive = expanded
           )
-      COMPLETE -> {
-        StepIconIndicator(
-          modifier = stepIndicatorConstraints,
-          isActive = true,
-          icon = Rounded.Check
-        )
-      }
-      LOADING -> {
-
-      }
     }
 
     StepTitle(

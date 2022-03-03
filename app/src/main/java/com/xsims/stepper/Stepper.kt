@@ -1,5 +1,6 @@
 package com.xsims.stepper
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -46,6 +47,7 @@ fun Stepper(
   Column(modifier = Modifier.padding(20.dp)) {
     steps.forEachIndexed { index, step ->
       StepUi(
+        modifier = Modifier.clickable { currentStep.value = index },
         index = index + 1,
         step = step,
         expanded = index == currentStep.value,

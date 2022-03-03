@@ -7,14 +7,9 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -54,6 +49,7 @@ enum class StepState {
 
 @Composable
 fun StepUi(
+  modifier: Modifier = Modifier,
   index: Int,
   step: Step,
   expanded: Boolean,
@@ -63,7 +59,7 @@ fun StepUi(
 ) {
 
   ConstraintLayout(
-    modifier = Modifier
+    modifier = modifier
       .padding(bottom = 8.dp)
       .fillMaxWidth()
   ) {

@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.xsims.stepper.ui.theme.Black38
 import com.xsims.stepper.ui.theme.Black54
 import com.xsims.stepper.ui.theme.Black87
+import com.xsims.stepper.ui.theme.RedError
 import com.xsims.stepper.ui.theme.activeStepTitleStyle
 import com.xsims.stepper.ui.theme.inactiveStepTitleStyle
 import com.xsims.stepper.ui.theme.stepSubtitleStyle
@@ -30,14 +31,15 @@ fun StepTitle(
   modifier: Modifier,
   title: String,
   subtitle: String? = null,
-  active: Boolean
+  active: Boolean,
+  isError: Boolean = false
 ) {
   Column( modifier = modifier) {
     Text(
       text = title,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
-      color = if(active) Black87 else Black38,
+      color = if(isError) RedError else if(active) Black87 else Black38,
       style = if(active) activeStepTitleStyle else inactiveStepTitleStyle
     )
     subtitle?.let {
@@ -46,7 +48,7 @@ fun StepTitle(
         text = it,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        color = Black54,
+        color = if(isError) RedError else Black54,
         style = stepSubtitleStyle
       )
     }

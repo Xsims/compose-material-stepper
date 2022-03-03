@@ -16,7 +16,7 @@ import com.xsims.stepper.ui.step.Step
 import com.xsims.stepper.ui.theme.Black38
 import com.xsims.stepper.ui.theme.StepperTheme
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun ClassicMaterialStepperScreen() {
   val currentStep = remember { mutableStateOf(0) }

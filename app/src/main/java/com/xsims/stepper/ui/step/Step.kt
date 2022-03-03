@@ -1,17 +1,20 @@
 package com.xsims.stepper.ui.step
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons.Rounded
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -19,6 +22,7 @@ import androidx.constraintlayout.compose.Dimension.Companion
 import androidx.constraintlayout.compose.atLeast
 import com.xsims.stepper.ui.step.StepState.COMPLETE
 import com.xsims.stepper.ui.step.StepState.ERROR
+import com.xsims.stepper.ui.step.StepState.LOADING
 import com.xsims.stepper.ui.step.StepState.TODO
 import com.xsims.stepper.ui.theme.Grey400
 
@@ -32,38 +36,32 @@ import com.xsims.stepper.ui.theme.Grey400
  * @see [Guidelines](https://material.io/archive/guidelines/components/steppers.html)
  */
 @Immutable
-class Step(
+data class Step(
   val title: String,
   val subtitle: String? = null,
-  val activeIcon: Icon? = null,
+  val activeIcon: ImageVector? = null,
   val isActive: Boolean = false,
-  var state: MutableState<StepState> = mutableStateOf(StepState.TODO),
-  val onStepComplete: (Step) -> Unit = { },
+  var state: MutableState<StepState> = mutableStateOf(TODO),
   val content: @Composable () -> Unit
 )
 
 enum class StepState {
   COMPLETE,
   ERROR,
-  TODO
+  TODO,
+  LOADING
 }
 
 @Composable
 fun StepUi(
-  stepNumber: Int,
-  title: String,
-  subtitle: String? = null,
-  activeIcon: ImageVector? = null,
+  index: Int,
+  step: Step,
   expanded: Boolean,
   isLastStep: Boolean,
-  enablePositiveButton: Boolean,
-  enableNegativeButton: Boolean,
-  onClickPositiveButton: (Step) -> Unit,
-  onClickNegativeButton: (Step) -> Unit,
-  onStepComplete: (Step) -> Unit,
-  content: @Composable () -> Unit,
-  step: Step,
+  nextButton: @Composable (() -> Unit)? = null,
+  previousButton: @Composable (() -> Unit)? = null,
 ) {
+
   ConstraintLayout(
     modifier = Modifier
       .padding(bottom = 8.dp)
@@ -77,33 +75,32 @@ fun StepUi(
       start.linkTo(parent.start)
     }
     when (step.state.value) {
-      ERROR -> StepIconIndicator(
+      ERROR -> StepErrorIconIndicator(
         modifier = stepIndicatorConstraints,
-        isActive = expanded,
-        icon = Rounded.Close
+        isActive = expanded
       )
-      TODO -> {
-        if (activeIcon != null) {
+      TODO ->
+        if (step.activeIcon != null)
           StepIconIndicator(
             modifier = stepIndicatorConstraints,
             isActive = expanded,
-            icon = activeIcon
+            icon = step.activeIcon
           )
-        } else {
+        else
           StepNumberIndicator(
             modifier = stepIndicatorConstraints,
-            stepNumber,
+            index,
             isActive = expanded
           )
-        }
-      }
       COMPLETE -> {
         StepIconIndicator(
           modifier = stepIndicatorConstraints,
           isActive = expanded,
           icon = Rounded.Check
         )
-        onStepComplete(step)
+      }
+      LOADING -> {
+
       }
     }
 
@@ -113,9 +110,10 @@ fun StepUi(
         bottom.linkTo(stepIndicatorId.bottom)
         start.linkTo(stepIndicatorId.end, margin = 16.dp)
       },
-      title = title,
-      subtitle = subtitle,
-      active = expanded
+      title = step.title,
+      subtitle = step.subtitle,
+      active = expanded,
+      isError = step.state.value == ERROR
     )
 
     if (!isLastStep) {
@@ -141,12 +139,9 @@ fun StepUi(
           end.linkTo(parent.end)
         },
       visible = expanded,
-      enablePositiveButton = enablePositiveButton,
-      enableNegativeButton = enableNegativeButton,
-      onClickPositiveButton = onClickPositiveButton,
-      onClickNegativeButton = onClickNegativeButton,
-      step = step,
-      content = content
+      nextButton = nextButton,
+      previousButton = previousButton,
+      step = step
     )
   }
 }

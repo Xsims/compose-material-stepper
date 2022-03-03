@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
@@ -44,13 +45,16 @@ class MainActivity : ComponentActivity() {
 
   private val statePrintAppStep = mutableStateOf(TODO)
 
-  private val printAppStep = Step(
+  private val exampleStateInStep = Step(
     title = "Printing App",
     subtitle = "Print Connect App must be installed",
     state = statePrintAppStep,
   ) {
     when (statePrintAppStep.value) {
-      ERROR -> Button(onClick = { statePrintAppStep.value = COMPLETE }) {
+      ERROR -> Button(onClick = {
+        statePrintAppStep.value = COMPLETE
+        nextStep()
+      }) {
         Text("RETRY")
       }
       TODO -> Button(onClick = { statePrintAppStep.value = ERROR }) {
@@ -58,13 +62,12 @@ class MainActivity : ComponentActivity() {
       }
       COMPLETE -> {
         Text("Complete")
-        nextStep()
       }
     }
   }
 
   private val steps = listOf(
-    printAppStep,
+    exampleStateInStep,
     Step(title = "Printing App", subtitle = "Print Connect App must be installed") {
       Column(
         modifier = Modifier.padding(top = 8.dp, end = 24.dp)
@@ -100,6 +103,11 @@ class MainActivity : ComponentActivity() {
       title = "Bluetooth connection",
       subtitle = "Check if Bluetooth is present and enabled"
     ) {
+      OutlinedTextField(
+        value = "",
+        onValueChange = { },
+        label = { Text("Name") }
+      )
       Box(
         modifier = Modifier
           .height(250.dp)
@@ -110,27 +118,22 @@ class MainActivity : ComponentActivity() {
   )
 
   private fun nextStep() {
-    if (currentStep.value < steps.size) {
+    if (currentStep.value < steps.size)
       currentStep.value = currentStep.value + 1
-    }
-  }
-
-  private fun previousStep() {
-    if(currentStep.value > 0) {
-      currentStep.value = currentStep.value - 1
-    }
   }
 
   @Preview(showSystemUi = true)
   @Composable
   fun MainActivityPreview() {
     currentStep = remember { mutableStateOf(0) }
+
     StepperTheme {
       Stepper(
         currentStep = currentStep,
-        enableNegativeButton = false,
-        enablePositiveButton = false,
-        steps = steps)
+        nextButton = null,
+        previousButton = null,
+        steps = steps
+      )
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.xsims.stepper.ui.step
+package com.xsims.stepper_compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,11 +15,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Dimension.Companion
 import androidx.constraintlayout.compose.atLeast
-import com.xsims.stepper.ui.step.StepState.COMPLETE
-import com.xsims.stepper.ui.step.StepState.ERROR
-import com.xsims.stepper.ui.step.StepState.LOADING
-import com.xsims.stepper.ui.step.StepState.TODO
-import com.xsims.stepper.ui.theme.Grey400
+import com.xsims.stepper_compose.StepState.COMPLETE
+import com.xsims.stepper_compose.StepState.ERROR
+import com.xsims.stepper_compose.StepState.TODO
 
 /** A material step used in [Stepper]. The step can have a title and subtitle,
  * an icon within its circle, some content and a state that governs its
@@ -111,7 +109,7 @@ fun StepUi(
 
     if (!isLastStep) {
       StepDivider(
-        color = Grey400,
+        color = Const.Grey400,
         modifier = Modifier
           .constrainAs(dividerId) {
             height = Dimension.fillToConstraints.atLeast(16.dp)

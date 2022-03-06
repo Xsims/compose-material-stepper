@@ -1,4 +1,4 @@
-package com.xsims.stepper
+package com.xsims.stepper_compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.xsims.stepper.ui.step.Step
-import com.xsims.stepper.ui.step.StepUi
+import com.xsims.stepper_compose.StepState.COMPLETE
+import com.xsims.stepper_compose.StepState.TODO
 
 /**
  * Creates a stepper from a list of steps.
@@ -31,6 +31,7 @@ fun Stepper(
   nextButton: @Composable (() -> Unit)? = {
     Button(onClick = {
       if (currentStep.value < steps.size) {
+        steps.getOrNull(currentStep.value)?.state?.value = COMPLETE
         currentStep.value = currentStep.value + 1
       }
     }) { Text("Next".uppercase()) }
@@ -38,6 +39,7 @@ fun Stepper(
   previousButton: @Composable (() -> Unit)? = {
     TextButton(onClick = {
       if(currentStep.value > 0) {
+        steps.getOrNull(currentStep.value)?.state?.value = TODO
         currentStep.value = currentStep.value - 1
       }
     }) { Text("Cancel".uppercase(), color = Color.Gray) }

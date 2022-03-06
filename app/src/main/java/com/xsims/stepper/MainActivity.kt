@@ -3,143 +3,45 @@ package com.xsims.stepper
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.xsims.stepper.ui.step.Step
-import com.xsims.stepper.ui.step.StepState.COMPLETE
-import com.xsims.stepper.ui.step.StepState.ERROR
-import com.xsims.stepper.ui.step.StepState.LOADING
-import com.xsims.stepper.ui.step.StepState.TODO
-import com.xsims.stepper.ui.theme.Black38
-import com.xsims.stepper.ui.theme.StepperTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.xsims.stepper.ui.screens.MaterialStepperScreen
+import com.xsims.stepper.ui.screens.StateStepperScreen
 
 class MainActivity : ComponentActivity() {
 
-  private lateinit var currentStep: MutableState<Int>
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContent { MainActivityPreview() }
-  }
-
-  private val statePrintAppStep = mutableStateOf(TODO)
-
-  private val exampleStateInStep = Step(
-    title = "Printing App",
-    subtitle = "Print Connect App must be installed",
-    state = statePrintAppStep,
-  ) {
-    when (statePrintAppStep.value) {
-      TODO -> Button(onClick = {
-        statePrintAppStep.value = LOADING
-        CoroutineScope(Dispatchers.IO).launch {
-          delay(2000)
-        }.invokeOnCompletion {
-          statePrintAppStep.value = ERROR
-        }
-      }) {
-        Text("click")
-      }
-      LOADING -> CircularProgressIndicator()
-      ERROR -> Button(onClick = {
-        statePrintAppStep.value = COMPLETE
-        nextStep()
-      }) {
-        Text("RETRY")
-      }
-      COMPLETE -> Text("Complete")
+    setContent {
+      MainActivityPreview()
     }
-  }
-
-  private val steps = listOf(
-    exampleStateInStep,
-    Step(title = "Printing App", subtitle = "Print Connect App must be installed") {
-      Column(
-        modifier = Modifier.padding(top = 8.dp, end = 24.dp)
-      ) {
-        Text(
-          text = "L’application print connect n’est pas détecté sur votre PDA.",
-          style = MaterialTheme.typography.caption
-        )
-        Box(
-          modifier = Modifier.fillMaxWidth(),
-          contentAlignment = Alignment.Center,
-        ) {
-          Icon(
-            Icons.Rounded.Close,
-            modifier = Modifier
-              .size(48.dp),
-            tint = Color.Red,
-            contentDescription = "Application non installée"
-          )
-        }
-        Text(
-          text = "Celle-ci est necessaire pour imprimer depuis l’application DLC Memo .\n\n" +
-              "Si votre PDA autorise le téléchargement de nouvelles applications cliquer sur :",
-          style = MaterialTheme.typography.caption
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /*TODO*/ }) {
-          Text("Télécharger Print Connect".uppercase())
-        }
-      }
-    },
-    Step(
-      title = "Bluetooth connection",
-      subtitle = "Check if Bluetooth is present and enabled"
-    ) {
-      Box(
-        modifier = Modifier
-          .height(250.dp)
-          .fillMaxWidth()
-          .background(color = Black38)
-      )
-    }
-  )
-
-  private fun nextStep() {
-    if (currentStep.value < steps.size)
-      currentStep.value = currentStep.value + 1
   }
 
   @Preview(showSystemUi = true)
   @Composable
   fun MainActivityPreview() {
-    currentStep = remember { mutableStateOf(0) }
-
-    StepperTheme {
-      Stepper(
-        currentStep = currentStep,
-        nextButton = null,
-        previousButton = null,
-        steps = steps
-      )
+    var tabIndex by remember { mutableStateOf(0) }
+    val tabTitles = listOf("Material", "State")
+    Column {
+      TabRow(selectedTabIndex = tabIndex) {
+        tabTitles.forEachIndexed { index, title ->
+          Tab(selected = tabIndex == index,
+            onClick = { tabIndex = index },
+            text = { Text(text = title) })
+        }
+      }
+      when (tabIndex) {
+        0 -> MaterialStepperScreen()
+        1 -> StateStepperScreen()
+      }
     }
   }
 }

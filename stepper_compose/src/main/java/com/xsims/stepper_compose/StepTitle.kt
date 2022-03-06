@@ -1,4 +1,4 @@
-package com.xsims.stepper.ui.step
+package com.xsims.stepper_compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -7,13 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.xsims.stepper.ui.theme.Black38
-import com.xsims.stepper.ui.theme.Black54
-import com.xsims.stepper.ui.theme.Black87
-import com.xsims.stepper.ui.theme.RedError
-import com.xsims.stepper.ui.theme.activeStepTitleStyle
-import com.xsims.stepper.ui.theme.inactiveStepTitleStyle
-import com.xsims.stepper.ui.theme.stepSubtitleStyle
 
 /**
  * The step title is following material [guideline's](https://material.io/archive/guidelines/components/steppers.html#steppers-usage) :
@@ -39,8 +32,8 @@ fun StepTitle(
       text = title,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
-      color = if(isError) RedError else if(active) Black87 else Black38,
-      style = if(active) activeStepTitleStyle else inactiveStepTitleStyle
+      color = if(isError) Const.RedError else if(active) Const.Black87 else Const.Black38,
+      style = if(active) Const.activeStepTitleStyle else Const.inactiveStepTitleStyle
     )
     subtitle?.let {
       Text(
@@ -48,8 +41,8 @@ fun StepTitle(
         text = it,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        color = if(isError) RedError else Black54,
-        style = stepSubtitleStyle
+        color = if(isError) Const.RedError else Const.Black54,
+        style = Const.stepSubtitleStyle
       )
     }
   }

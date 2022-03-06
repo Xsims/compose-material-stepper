@@ -1,4 +1,4 @@
-package com.xsims.stepper.ui.step
+package com.xsims.stepper_compose
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -19,10 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.xsims.stepper.ui.theme.COLLAPSE_ANIMATION_DURATION
-import com.xsims.stepper.ui.theme.EXPAND_ANIMATION_DURATION
-import com.xsims.stepper.ui.theme.FADE_IN_ANIMATION_DURATION
-import com.xsims.stepper.ui.theme.FADE_OUT_ANIMATION_DURATION
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -36,24 +32,24 @@ fun StepContent(
   val enterFadeIn = remember {
     fadeIn(
       animationSpec = TweenSpec(
-        durationMillis = FADE_IN_ANIMATION_DURATION,
+        durationMillis = Const.FADE_IN_ANIMATION_DURATION,
         easing = FastOutLinearInEasing
       )
     )
   }
   val enterExpand = remember {
-    expandVertically(animationSpec = tween(EXPAND_ANIMATION_DURATION))
+    expandVertically(animationSpec = tween(Const.EXPAND_ANIMATION_DURATION))
   }
   val exitFadeOut = remember {
     fadeOut(
       animationSpec = TweenSpec(
-        durationMillis = FADE_OUT_ANIMATION_DURATION,
+        durationMillis = Const.FADE_OUT_ANIMATION_DURATION,
         easing = LinearOutSlowInEasing
       )
     )
   }
   val exitCollapse = remember {
-    shrinkVertically(animationSpec = tween(COLLAPSE_ANIMATION_DURATION))
+    shrinkVertically(animationSpec = tween(Const.COLLAPSE_ANIMATION_DURATION))
   }
   AnimatedVisibility(
     modifier = modifier,

@@ -1,4 +1,4 @@
-package com.xsims.stepper.ui.step
+package com.xsims.stepper_compose
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider

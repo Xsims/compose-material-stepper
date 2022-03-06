@@ -1,4 +1,4 @@
-package com.xsims.stepper.ui.step
+package com.xsims.stepper_compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,12 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.xsims.stepper.ui.theme.ACTIVE_STEPPER_CIRCLE_SIZE
-import com.xsims.stepper.ui.theme.Black38
-import com.xsims.stepper.ui.theme.RedError
-import com.xsims.stepper.ui.theme.stepIndicatorStyle
 
 @Composable
 fun StepNumberIndicator(
@@ -35,18 +30,17 @@ fun StepNumberIndicator(
       "$index",
       textAlign = TextAlign.Center,
       color = Color.White,
-      style = stepIndicatorStyle,
+      style = Const.stepIndicatorStyle,
     )
   }
 }
 
-@Preview
 @Composable
 fun StepErrorIconIndicator(
   modifier: Modifier = Modifier,
   errorIcon: ImageVector = Icons.Filled.Warning,
   isActive: Boolean = false,
-  tint: Color = RedError,
+  tint: Color = Const.RedError,
   backgroundActiveColor: Color = Color.Transparent,
   backgroundInactiveColor: Color = Color.Transparent
 ) {
@@ -67,7 +61,7 @@ fun StepIconIndicator(
   isActive: Boolean = false,
   tint: Color = Color.White,
   backgroundActiveColor: Color = MaterialTheme.colors.primary,
-  backgroundInactiveColor: Color = Black38,
+  backgroundInactiveColor: Color = Const.Black38,
 ) {
     StepIndicator(modifier = modifier,
       isActive = isActive,
@@ -88,14 +82,14 @@ fun StepIndicator(
   modifier: Modifier = Modifier,
   isActive: Boolean,
   activeColor: Color = MaterialTheme.colors.primary,
-  inactiveColor: Color = Black38,
+  inactiveColor: Color = Const.Black38,
   composable: @Composable () -> Unit,
 ) {
   Box(
     contentAlignment = Alignment.Center,
     modifier = modifier
-      .width(ACTIVE_STEPPER_CIRCLE_SIZE)
-      .height(ACTIVE_STEPPER_CIRCLE_SIZE)
+      .width(Const.ACTIVE_STEPPER_CIRCLE_SIZE)
+      .height(Const.ACTIVE_STEPPER_CIRCLE_SIZE)
       .background(
         color = if (isActive) activeColor else inactiveColor,
         shape = CircleShape

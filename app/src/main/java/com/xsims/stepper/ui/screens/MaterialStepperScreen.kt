@@ -18,7 +18,7 @@ import com.xsims.stepper_compose.Stepper
 fun MaterialStepperScreen() {
   StepperTheme {
     Stepper(
-      steps = List(4) { index ->
+      steps = List(8) { index ->
         Step(
           title = "Name of step ${index + 1}",
           subtitle = "Subtitle of step ${index + 1}"

@@ -1,8 +1,13 @@
 package com.xsims.stepper_compose
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -27,6 +32,7 @@ import com.xsims.stepper_compose.StepState.TODO
 @Composable
 fun Stepper(
   //type: StepperType = vertical,
+  scrollState: ScrollState = rememberScrollState(1),
   currentStep: MutableState<Int> = remember { mutableStateOf(0) },
   nextButton: @Composable (() -> Unit)? = {
     Button(onClick = {
@@ -46,7 +52,14 @@ fun Stepper(
   },
   steps: List<Step>,
 ) {
-  Column(modifier = Modifier.padding(20.dp)) {
+  Column(modifier = Modifier
+    .padding(horizontal = 20.dp)
+    .verticalScroll(
+      state = scrollState,
+      enabled = true,
+      reverseScrolling = false,
+    )) {
+    Spacer(modifier = Modifier.height(10.dp))
     steps.forEachIndexed { index, step ->
       StepUi(
         modifier = Modifier.clickable { currentStep.value = index },

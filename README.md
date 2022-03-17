@@ -15,6 +15,26 @@ Stepper Compose is a Composable UI library based on <a href="https://developer.a
   <img src="./screenshots/classic_material_stepper.png" width="25%" />
 </p>
 
+### Create classic material Stepper
+
+```kotlin
+Stepper(
+      steps = List(8) { index ->
+        Step(
+          title = "Name of step ${index + 1}",
+          subtitle = "Subtitle of step ${index + 1}"
+        ) {
+          Box(
+            modifier = Modifier
+              .height(250.dp)
+              .fillMaxWidth()
+              .background(color = Black38)
+          )
+        }
+      }
+    )
+```
+
  <p align="center">  
 The Stepper includes state management on each step (<b>TODO, LOADING, ERROR, COMPLETE</b>) letting you the possibility to update each step easily.
 </p>
@@ -34,6 +54,33 @@ The Stepper includes state management on each step (<b>TODO, LOADING, ERROR, COM
     <td><img src="./screenshots/state_stepper_complete.png" width="100%" /></td>
   </tr>
  </table>
+
+### Managing state with Stepper
+
+```kotlin
+Step(
+  title = "My Step",
+  state = state,
+) {
+when (state.value) {
+    TODO -> Button(onClick = { 
+    state.value = LOADING 
+    triggerErrorAfterMillis(2000) }) { 
+      Text("CLICK") 
+    }
+    
+    LOADING -> CircularProgressIndicator()
+    
+    ERROR -> Button(onClick = { 
+    state.value = COMPLETE
+    nextStep() }) { 
+      Text("RETRY") 
+    }
+      
+    COMPLETE -> Text("Complete")
+  }
+}
+```
 
 <img src="./screenshots/demo.gif" align="right" width="32%"/>
 

@@ -7,14 +7,33 @@
 </p>
 
 <p align="center">  
-Stepper Compose is a Composable UI library based on <a href="https://developer.android.com/jetpack/compose">Jetpack Compose</a> and designed following <a href="https://material.io/archive/guidelines/components/steppers.html">Material Guidelines</a>.
+Stepper Compose is a Composable UI library based on <a href="https://developer.android.com/jetpack/compose">Jetpack Compose</a> and designed following <a href="https://material.io/archive/guidelines/components/steppers.html">Material Guidelines</a>.<br/>
 </p>
 <br/>
 
-<p align="center">
-<img src="./screenshots/classic_material_stepper.png"/>
+<p float="left" align="center">
+  <img src="./screenshots/classic_material_stepper.png" width="25%" />
+</p>
+
+ <p align="center">  
+The Stepper includes state management on each step (<b>TODO, LOADING, ERROR, COMPLETE</b>) letting you the possibility to update each step easily.
 </p>
 <br/>
+
+<table>
+  <tr>
+    <td>TODO</td>
+    <td>LOADING</td>
+    <td>ERROR</td>
+    <td>COMPLETE</td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/state_stepper_todo.png" width="100%" /></td>
+    <td><img src="./screenshots/state_stepper_loading.png" width="100%" /></td>
+    <td><img src="./screenshots/state_stepper_error.png" width="100%" /></td>
+    <td><img src="./screenshots/state_stepper_complete.png" width="100%" /></td>
+  </tr>
+ </table>
 
 <img src="./screenshots/demo.gif" align="right" width="32%"/>
 

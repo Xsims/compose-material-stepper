@@ -1,6 +1,7 @@
 <h1 align="center">Stepper Material with Compose</h1>
 
 <p align="center">  
+<a href="https://jitpack.io/#Xsims/compose-material-stepper"><img alt="Jitpack" src="https://jitpack.io/v/Xsims/compose-material-stepper.svg"/></a>
 <a href="https://medium.com/@romeo.prosecco"><img alt="Medium" src="https://skydoves.github.io/badges/Story-Medium.svg"/></a>
 <a href="https://twitter.com/XsimsDev"><img alt="Twitter" src="https://img.shields.io/static/v1?label=Twitter&message=XsimsDev&color=blue&style=flat&logo=twitter&logoColor=white"/></a>
 <a href="https://www.youtube.com/channel/UCICrbgl_T0qW4y4nZkUF-xw"><img alt="Youtube" src="https://img.shields.io/static/v1?label=Youtube&message=Xsims&color=FF0000&style=flat&logo=Youtube&logoColor=white"/></a>
